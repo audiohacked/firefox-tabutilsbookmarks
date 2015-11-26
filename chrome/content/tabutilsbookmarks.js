@@ -28,7 +28,7 @@ var tabutilsbookmarks = {
 
   onunload: function() {
     this._eventListeners.forEach(function(args) document.removeEventListener.apply(args[0], Array.slice(args, 1)));
-    this._tagsFolderObserver.uninit();
+    // this._tagsFolderObserver.uninit();
   },
 
   handleEvent: function(event) {
