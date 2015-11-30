@@ -1,5 +1,4 @@
 content   tabutilsbookmarks                 chrome/content/
 
 overlay   chrome://browser/content/browser.xul                      chrome://tabutilsbookmarks/content/tabutilsbookmarks.xul
-overlay   chrome://browser/content/places/bookmarkProperties.xul    chrome://tabutilsbookmarks/content/bookmarkProperties.xul
 overlay   chrome://browser/content/places/bookmarkProperties2.xul   chrome://tabutilsbookmarks/content/bookmarkProperties.xul
