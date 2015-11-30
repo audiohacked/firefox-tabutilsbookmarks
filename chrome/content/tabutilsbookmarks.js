@@ -69,21 +69,7 @@ tabutilsbookmarks._bookmarkTabs = function() {
     else
       PlacesCommandHook.bookmarkPage(aTabs[0].linkedBrowser, PlacesUtils.bookmarksMenuFolderId, true);
   };
-
-  if (tabutilsbookmarks.fxVersion < 40) { // https://hg.mozilla.org/mozilla-central/diff/d84b62b367b4/browser/base/content/browser-places.js
-  TU_hookCode("PlacesCommandHook.bookmarkPage",
-    [/(?=.*(createItem|PlacesCreateBookmarkTransaction).*)/, function() {
-      var annos = [descAnno];
-      if (!gPrivateBrowsingUI.privateBrowsingEnabled && TU_getPref("extensions.tabutilsbookmarks.bookmarkWithHistory", false)) {
-        let tab = gBrowser.mTabs[gBrowser.browsers.indexOf(aBrowser)];
-        if (tab)
-          annos.push({name: "bookmarkProperties/tabState", value: tabutilsbookmarks._ss.getTabState(tab)});
-      }
-    }],
-    [/.*(createItem|PlacesCreateBookmarkTransaction).*/, function(s) s.replace("[descAnno]", "annos")]  // Bug 575955 [Fx13]
-  );
-  }
-
+  
   TU_hookCode("PlacesCommandHook.bookmarkCurrentPages",
     ["this.uniqueCurrentPages", (function() {
       !gPrivateBrowsingUI.privateBrowsingEnabled && TU_getPref("extensions.tabutilsbookmarks.bookmarkAllWithHistory", true) ?
