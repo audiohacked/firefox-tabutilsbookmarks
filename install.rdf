@@ -2,12 +2,12 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>tabutilsbookmarks@hyperkineticnerd.com</em:id>
-    <em:type>2</em:type>
     <em:name>Tab Utilities Bookmarks</em:name>
+    <em:description>Provides Timestamp on Bookmark All Tabs UI</em:description>
     <em:version>1.0.0.0</em:version>
     <em:creator>audiohacked</em:creator>
     <em:contributor>ithinc (Former author)</em:contributor>
-    <em:description>Open Bookmarks/History/URL/Search in new tabs, and more utilities for tabbed browsing.</em:description>
+
     <em:targetApplication>
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> <!-- Firefox -->
@@ -15,6 +15,11 @@
         <em:maxVersion>39.*</em:maxVersion>
       </Description>
     </em:targetApplication>
+
     <em:strictCompatibility>false</em:strictCompatibility>
+    <!-- <em:unpack>true</em:unpack> -->
+    <em:bootstrap>true</em:bootstrap>
+    <em:type>2</em:type>
+
   </Description>
 </RDF>
