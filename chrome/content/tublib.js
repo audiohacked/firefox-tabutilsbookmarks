@@ -1,6 +1,6 @@
 let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
-function TU_hookCode(aStr) {
+function TUB_hookCode(aStr) {
   try {
     var namespaces = aStr.split(".");
 
@@ -18,14 +18,14 @@ function TU_hookCode(aStr) {
     if (typeof object[method] != "function")
       throw TypeError(aStr + " is not a function");
 
-    return object[method] = TU_hookFunc.apply(this, Array.concat(object[method], Array.slice(arguments, 1)));
+    return object[method] = TUB_hookFunc.apply(this, Array.concat(object[method], Array.slice(arguments, 1)));
   }
   catch (e) {
     Components.utils.reportError("Failed to hook " + aStr + ": " + e.message);
   }
 }
 
-function TU_hookSetter(aStr) {
+function TUB_hookSetter(aStr) {
   try {
     var namespaces = aStr.split(".");
 
@@ -44,7 +44,7 @@ function TU_hookSetter(aStr) {
     if (!orgSetter)
       throw TypeError(aStr + " has no setter");
 
-    var mySetter = TU_hookFunc.apply(this, Array.concat(orgSetter, Array.slice(arguments, 1)));
+    var mySetter = TUB_hookFunc.apply(this, Array.concat(orgSetter, Array.slice(arguments, 1)));
     object.__defineGetter__(property, object.__lookupGetter__(property));
     object.__defineSetter__(property, mySetter);
 
@@ -55,7 +55,7 @@ function TU_hookSetter(aStr) {
   }
 }
 
-function TU_hookFunc(aFunc) {
+function TUB_hookFunc(aFunc) {
   var myCode = aFunc.toString();
   var orgCode, newCode, flags;
 
@@ -79,29 +79,10 @@ function TU_hookFunc(aFunc) {
     myCode = myCode.replace(orgCode, newCode);
   }
 
-//  Cu.reportError(myCode);
-//  myCode = myCode.replace(/(^.*\n?{)([\s\S]*)(}$)/, function(s, s1, s2, s3) (function() {
-//    $1
-//    try {
-////      switch (arguments.callee.name) {
-////        case "set_selectedTab":
-////          Cu.reportError(arguments.callee.caller.name + '*' + arguments.callee.name + '*' + (val && val._tPos));break;
-////        case "BrowserOpenTab":
-////          Cu.reportError(arguments.callee.caller.name + '*' + arguments.callee.name );break;
-////      }
-//      $2
-//    } catch (e) {
-//      Cu.reportError([arguments.callee.name ,e]);
-//      Cu.reportError(arguments.callee.stack);
-//      Cu.reportError(arguments.callee);
-//    }
-//    $3
-//  }).toString().replace(/^.*{|}$/g, "").replace("$1", s1).replace("$2", s2).replace("$3", s3));
-
   return eval("(" + myCode + ")");
 }
 
-function TU_getPref(aPrefName, aDefault) {
+function TUB_getPref(aPrefName, aDefault) {
   switch (Services.prefs.getPrefType(aPrefName)) {
     case Services.prefs.PREF_BOOL: return Services.prefs.getBoolPref(aPrefName);
     case Services.prefs.PREF_INT: return Services.prefs.getIntPref(aPrefName);
@@ -116,7 +97,7 @@ function TU_getPref(aPrefName, aDefault) {
   }
 }
 
-function TU_setPref(aPrefName, aValue) {
+function TUB_setPref(aPrefName, aValue) {
   switch (Services.prefs.getPrefType(aPrefName)) {
     case Services.prefs.PREF_BOOL: Services.prefs.setBoolPref(aPrefName, aValue);break;
     case Services.prefs.PREF_INT: Services.prefs.setIntPref(aPrefName, aValue);break;
@@ -130,7 +111,7 @@ function TU_setPref(aPrefName, aValue) {
   }
 }
 
-if (!Date.prototype.toMilitaryString) {
+if (!Date.prototype.TUBString) {
 	(function() {
 		function pre_pad(number, length) {
 			var str = "" + number;
@@ -146,7 +127,7 @@ if (!Date.prototype.toMilitaryString) {
 			}
 			return str;
 		}
-		Date.prototype.toMilitaryString = function() {
+		Date.prototype.TUBString = function() {
 			var offset = this.getTimezoneOffset();
 			var hour_offset = pre_pad(offset/60, 2);
 			return this.getUTCFullYear() +

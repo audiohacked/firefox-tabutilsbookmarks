@@ -36,9 +36,9 @@ window.addEventListener("DOMContentLoaded", tabutilsbookmarks, false);
 
 // Bookmark tabs with history
 tabutilsbookmarks._bookmarkTabs = function() {
-	TU_hookCode("PlacesCommandHook.bookmarkCurrentPages",
+	TUB_hookCode("PlacesCommandHook.bookmarkCurrentPages",
 		["this.uniqueCurrentPages", (function() {
-			!gPrivateBrowsingUI.privateBrowsingEnabled && TU_getPref("extensions.tabutilsbookmarks.bookmarkAllWithHistory", true) ?
+			!gPrivateBrowsingUI.privateBrowsingEnabled && TUB_getPref("extensions.tabutilsbookmarks.bookmarkAllWithHistory", true) ?
 			Array.map(gBrowser.allTabs, function(aTab) [aTab.linkedBrowser.currentURI, [{name: 'bookmarkProperties/tabState', value: tabutilsbookmarks._ss.getTabState(aTab)}]]) :
 			Array.map(gBrowser.allTabs, function(aTab) aTab.linkedBrowser.currentURI);
 		}).toString().replace(/^.*{|}$/g, "")],
