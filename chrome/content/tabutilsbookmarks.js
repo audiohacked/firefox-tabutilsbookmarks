@@ -1,3 +1,9 @@
+let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+// Cu.import("chrome://tabutilsbookmarks/content/tulib.jsm");
+
+// var TUB = new TUB;
+
 var tabutilsbookmarks = {
 	init: function() {
 		this._bookmarkTabs();
@@ -26,34 +32,31 @@ var tabutilsbookmarks = {
 		}
 	}
 };
+
 window.addEventListener("DOMContentLoaded", tabutilsbookmarks, false);
 
 [
-	["@mozilla.org/browser/sessionstore;1", "nsISessionStore", "_ss", tabutilsbookmarks], // Bug 898732 [Fx26]
+    ["@mozilla.org/browser/sessionstore;1", "nsISessionStore", "_ss", tabutilsbookmarks], // Bug 898732 [Fx26]
 ].forEach(function([aContract, aInterface, aName, aObject])
-	XPCOMUtils.defineLazyServiceGetter(aObject || Services, aName || aInterface, aContract, aInterface)
+    XPCOMUtils.defineLazyServiceGetter(aObject || Services, aName || aInterface, aContract, aInterface)
 );
 
 // Bookmark tabs with history
 tabutilsbookmarks._bookmarkTabs = function() {
-	TUB_hookCode("PlacesCommandHook.bookmarkCurrentPages",
-		["this.uniqueCurrentPages", (function() {
-			!gPrivateBrowsingUI.privateBrowsingEnabled && TUB_getPref("extensions.tabutilsbookmarks.bookmarkAllWithHistory", true) ?
-			Array.map(gBrowser.allTabs, function(aTab) [aTab.linkedBrowser.currentURI, [{name: 'bookmarkProperties/tabState', value: tabutilsbookmarks._ss.getTabState(aTab)}]]) :
-			Array.map(gBrowser.allTabs, function(aTab) aTab.linkedBrowser.currentURI);
-		}).toString().replace(/^.*{|}$/g, "")],
-		["pages.length > 1", "true"]
-	);
+    TUB_hookCode("PlacesCommandHook.bookmarkCurrentPages",
+        ["this.uniqueCurrentPages", (function() {
+            !gPrivateBrowsingUI.privateBrowsingEnabled && TUB_getPref("extensions.tabutilsbookmarks.bookmarkAllWithHistory", true) ?
+            Array.map(gBrowser.allTabs, function(aTab) [aTab.linkedBrowser.currentURI, [{name: 'bookmarkProperties/tabState', value: tabutilsbookmarks._ss.getTabState(aTab)}]]) :
+            Array.map(gBrowser.allTabs, function(aTab) aTab.linkedBrowser.currentURI);
+        }).toString().replace(/^.*{|}$/g, "")],
+        ["pages.length > 1", "true"]
+    );
 };
 
 tabutilsbookmarks._multiTabHandler = function() {
-	[
-		["context_bookmarkTab", "gBrowser.bookmarkTab(gBrowser.mContextTabs);"],
-	].forEach(function([aId, aCommand]) {
-		var item = document.getElementById(aId);
-		if (item) {
-			item.addEventListener("oncommand", aCommand);
-			item.setAttribute("multiselected", "any");
-		}
-	});
+    var item = document.getElementById("context_bookmarkTab");
+    if (item) {
+        item.addEventListener("oncommand", "gBrowser.bookmarkTab(gBrowser.mContextTabs);");
+        item.setAttribute("multiselected", "any");
+    }
 }

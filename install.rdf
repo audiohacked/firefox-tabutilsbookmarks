@@ -17,5 +17,6 @@
       </Description>
     </em:targetApplication>
     <em:strictCompatibility>false</em:strictCompatibility>
+    <!-- <em:bootstrap>true</em:bootstrap> -->
   </Description>
 </RDF>
