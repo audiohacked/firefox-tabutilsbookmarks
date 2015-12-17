@@ -52,7 +52,7 @@ tabutilsbookmarks._multiTabHandler = function() {
 	].forEach(function([aId, aCommand]) {
 		var item = document.getElementById(aId);
 		if (item) {
-			item.setAttribute("oncommand", aCommand);
+			item.addEventListener("oncommand", aCommand);
 			item.setAttribute("multiselected", "any");
 		}
 	});
