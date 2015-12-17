@@ -1,3 +1,7 @@
+let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+
+Cu.import("chrome://tabutilsbookmarks/content/tublib.js");
+
 var tabutilsbookmarks = {
 	init: function() {
 		this._bookmarkTabs();
@@ -36,9 +40,9 @@ window.addEventListener("DOMContentLoaded", tabutilsbookmarks, false);
 
 // Bookmark tabs with history
 tabutilsbookmarks._bookmarkTabs = function() {
-	TUB_hookCode("PlacesCommandHook.bookmarkCurrentPages",
+	TUB.hookCode("PlacesCommandHook.bookmarkCurrentPages",
 		["this.uniqueCurrentPages", (function() {
-			!gPrivateBrowsingUI.privateBrowsingEnabled && TUB_getPref("extensions.tabutilsbookmarks.bookmarkAllWithHistory", true) ?
+			!gPrivateBrowsingUI.privateBrowsingEnabled && TUB.getPref("extensions.tabutilsbookmarks.bookmarkAllWithHistory", true) ?
 			Array.map(gBrowser.allTabs, function(aTab) [aTab.linkedBrowser.currentURI, [{name: 'bookmarkProperties/tabState', value: tabutilsbookmarks._ss.getTabState(aTab)}]]) :
 			Array.map(gBrowser.allTabs, function(aTab) aTab.linkedBrowser.currentURI);
 		}).toString().replace(/^.*{|}$/g, "")],
