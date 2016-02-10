@@ -1,4 +1,4 @@
-let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+// let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 var EXPORTED_SYMBOLS = [];
 

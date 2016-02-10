@@ -1,4 +1,4 @@
-let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+// let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 function TUB_hookCode(aStr) {
   try {

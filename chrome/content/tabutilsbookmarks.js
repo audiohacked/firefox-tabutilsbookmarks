@@ -1,4 +1,4 @@
-let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+// let {classes: Cc, interfaces: Ci, utils: Cu} = Components;
 
 // Cu.import("chrome://tabutilsbookmarks/content/tulib.jsm");
 
